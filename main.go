@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	"os"
 )
 
 func ussd_callback(w http.ResponseWriter, r *http.Request){
@@ -54,10 +55,16 @@ func test(w http.ResponseWriter, r *http.Request){
 }
 
 func main(){
+
+	port, ok := os.LookupEnv("PORT")
+
+	if !ok {
+		port = "8080"
+	}
 	fmt.Println("this is a ussd application")
 
 	http.HandleFunc("/",ussd_callback)
 	http.HandleFunc("/test",test)
 
-	log.Fatal(http.ListenAndServe(":80",nil))
+	log.Fatal(http.ListenAndServe(":"+port,nil))
 }
