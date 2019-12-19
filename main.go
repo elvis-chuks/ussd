@@ -59,5 +59,5 @@ func main(){
 	http.HandleFunc("/",ussd_callback)
 	http.HandleFunc("/test",test)
 
-	log.Fatal(http.ListenAndServe(":5000",nil))
+	log.Fatal(http.ListenAndServe(":80",nil))
 }
