@@ -11,11 +11,31 @@ func ussd_callback(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("content-type","application/json")
 
 	fmt.Println(r.URL.Query())
+	session_id,ok := r.URL.Query()["sessionId"][0]
+	
+	if !ok ||len(sess[0]) <1{
+		log.Println("Url param 'sessionId' is missing")
+	}
+	service_code,ok = r.URL.Query()["serviceCode"][0]
+	
+	if !ok ||len(sess[0]) <1{
+		log.Println("Url param 'sessionId' is missing")
+	}
+	phone_number,ok = r.URL.Query()["phoneNumber"][0]
+	
+	if !ok ||len(sess[0]) <1{
+		log.Println("Url param 'sessionId' is missing")
+	}
+	text,ok = r.URL.Query()["text"][0]
+	
+	if !ok ||len(sess[0]) <1{
+		log.Println("Url param 'sessionId' is missing")
+	}
 
-	session_id := r.URL.Query()["sessionId"][0]
-	service_code := r.URL.Query()["serviceCode"][0]
-	phone_number := r.URL.Query()["phoneNumber"][0]
-	text := r.URL.Query()["text"][0]
+	// session_id := r.URL.Query()["sessionId"][0]
+	// service_code := r.URL.Query()["serviceCode"][0]
+	// phone_number := r.URL.Query()["phoneNumber"][0]
+	// text := r.URL.Query()["text"][0]
 
 	_ = fmt.Sprintf("%s,%s,%s,%s",session_id,service_code,phone_number,text)
 
