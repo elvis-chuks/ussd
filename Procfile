@@ -1,1 +1,1 @@
-web: bin/ussd
+web: ussd
