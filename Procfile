@@ -1,1 +1,1 @@
-web: ussd
+web:ussd
