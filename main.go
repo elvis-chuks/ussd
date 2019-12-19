@@ -10,6 +10,8 @@ import (
 func ussd_callback(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("content-type","application/json")
 
+	fmt.Println(r.URL.Query())
+
 	session_id := r.URL.Query()["sessionId"][0]
 	service_code := r.URL.Query()["serviceCode"][0]
 	phone_number := r.URL.Query()["phoneNumber"][0]
