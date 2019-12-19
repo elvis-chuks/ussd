@@ -47,10 +47,17 @@ func ussd_callback(w http.ResponseWriter, r *http.Request){
 
 }
 
+func test(w http.ResponseWriter, r *http.Request){
+	w.Header().Set("content-type","application/json")
+
+	w.Write([]byte("This App Works In Production"))
+}
+
 func main(){
 	fmt.Println("this is a ussd application")
 
 	http.HandleFunc("/",ussd_callback)
+	http.HandleFunc("/test",test)
 
 	log.Fatal(http.ListenAndServe(":5000",nil))
 }
