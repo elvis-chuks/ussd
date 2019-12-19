@@ -20,7 +20,10 @@ func ussd_callback(w http.ResponseWriter, r *http.Request){
 	if !ok || len(texts[0]) < 1 {
 		w.Write([]byte("invalid request"))
 	}
-	text := r.URL.Query()["text"][0]
+	else{
+		text := texts[0]
+	}
+	
 
 	// _ = fmt.Sprintf("%s,%s,%s,%s",session_id,service_code,phone_number,text)
 
