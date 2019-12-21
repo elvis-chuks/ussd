@@ -10,45 +10,36 @@ import (
 func ussd_callback(w http.ResponseWriter, r *http.Request){
 	w.Header().Set("content-type","application/json")
 
-	fmt.Println(r.URL.Query())
 	
 
-	// session_id := r.URL.Query()["sessionId"][0]
-	// service_code := r.URL.Query()["serviceCode"][0]
-	// phone_number := r.URL.Query()["phoneNumber"][0]
-	
-	
+	session_id := r.FormValue("sessionId")
+	service_code := r.FormValue("serviceCode")
+	phone_number := r.FormValue("phoneNumber")
+
+	_ = fmt.Sprintf("%s,%s,%s",session_id,service_code,phone_number)
+	text := r.FormValue("text")
 
 
-
-	// if len(text) == 0{
-
-	// 	w.Write([]byte("CON Gplang Ussd \n1. Send Money\n2. Buy Airtime"))
-
-	// }
-	texts,ok := r.URL.Query()["text"]
-	if !ok || len(texts[0]) < 1 {
-		w.Write([]byte("CON Gplang Ussd \n1. Send Money\n2. Buy Airtime"))
+	if len(text) == 0{
+		w.Write([]byte("CON What would you want to check \n1. My Account \n2. My Phone Number"))
 		return
-	}
-	text := texts[0]
-
+	}else{
 		switch text{
 
 		case "1":
-			w.Write([]byte("CON Select Bank \n1. FBN\n2. UBA"))
+			w.Write([]byte("CON Choose account information you want to view \n1. Account Number\n2. Account Balance"))
 			return
 
 		case "2":
-			w.Write([]byte("CON Select ISP \n1. MTN \n2. Airtel \n3. Glo"))
+			w.Write([]byte(fmt.Sprintf("END Your Phone Number is %s",phone_number)))
 			return
 
 		case "1*1":
-			w.Write([]byte("END Success"))
+			w.Write([]byte("END Your Account Number is ACC1001"))
 			return
 
 		case "1*2":
-			w.Write([]byte("END Airtime purchase succesful"))
+			w.Write([]byte("END Your Balance is NGN 20,000"))
 			return
 
 		default:
@@ -56,6 +47,8 @@ func ussd_callback(w http.ResponseWriter, r *http.Request){
 			return
 
 		}
+	}
+		
 	
 	
 
@@ -74,7 +67,7 @@ func main(){
 	if !ok {
 		port = "8080"
 	}
-	fmt.Println("this is a ussd application")
+	fmt.Println("this is a ussd application hosted using africastalking ussd platform, hosted on github")
 
 	http.HandleFunc("/",ussd_callback)
 	http.HandleFunc("/test",test)
